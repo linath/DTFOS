@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
+    <link rel="prefetch" type="application/l10n" href="l10n.ini" />
+  </head>
+  <body>
+    <!-- Use this installation button to install locally without going
+         through the marketpace (see app.js) -->
+    <!-- <button id="install-btn">Install</button>     -->
+
+    <x-listview class="list stationlist">
+      <header>
+        <h1 data-l10n-id="station"></h1>
+      </header>
+    </x-listview>
+
+    <x-listview class="list departurelist">
+      <header>
+        <h1 class="stationname"></h1>
+        <button data-l10n-id="refresh"></button>
+      </header>
+    </x-listview>
+
+    <div class="loading">Loading...</div>
+
+    <!-- Using require.js, a module system for javascript, include the
+         js files. This loads "main.js", which in turn can load other
+         files, all handled by require.js:
+         http://requirejs.org/docs/api.html#jsfiles -->
+    <script type="text/javascript"
+            data-main="js/init.js"
+            src="js/lib/require.js"></script>
+
+  </body>
+</html>
