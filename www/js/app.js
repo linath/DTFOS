@@ -28,7 +28,8 @@ define(function (require) {
 
     // List view
 
-    var list = $('.stationlist').get(0);
+    var list = $('.list').get(0);
+    list.nextView = '.departurelist';
 
     // Daten abfragen
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -57,6 +58,10 @@ define(function (require) {
         console.log('error on getting position', error);
     });
 
+    var departurelist = $('.departurelist').get(0);
+    departurelist.render = function(item) {
+        console.log(item);
+    };
 
     // Liste einfügen
 
