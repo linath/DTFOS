@@ -28,8 +28,15 @@ define(function (require) {
 
     // List view
 
-    var list = $('.list').get(0);
+    var list = $('.stationlist').get(0);
     list.nextView = '.departurelist';
+
+    list.renderRow = function (item) {
+
+        $(this).html(item.get('stationname') + ' '+ item.get('distance') + 'm');
+
+
+    }
 
     // Daten abfragen
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -39,19 +46,17 @@ define(function (require) {
         p.x = p.x.toFixed();
         p.y = p.y.toFixed();
 
-        console.dir(p);
-
-        $.getJSON('http://terachat.de:8080/efa/coordinate?' + $.param({'x': p.x, 'y': p.y, 'radius': 3000}), function(data, status) {
-            console.log('got', data, status);
+        $.getJSON('http://terachat.de:8080/efa/coordinate?' + $.param({'x': p.x, 'y': p.y, 'radius': 3000}), function (data, status) {
             var stations = data.response.stations;
-            _.each(stations, function(station){
+            _.each(stations, function (station) {
 
                 list.add({
-                    title:'<span class="name">'+station.name+'</span> <span class="distance">'+station.distance+'m</span>',
-                    name:station.name,
-                    distance:station.distance,
-                    id:station.id
+                    title: station.name,
+                    stationname: station.name,
+                    distance: station.distance,
+                    id: station.id
                 });
+
             })
         });
     }, function (error) {
@@ -59,25 +64,29 @@ define(function (require) {
     });
 
     var departurelist = $('.departurelist').get(0);
-    departurelist.render = function(item) {
-        console.log(item);
+
+    departurelist.open = function (item) {
+
+
+        console.log(item.get('stationname'), item.get('id'));
+
     };
 
     // Liste einfügen
 
     /*list.add({ title: 'Learn this template',
-        desc: 'This is a list-detail template. Learn more ' +
-            'about it at its ' +
-            '<a href="https://github.com/mozilla/mortar-list-detail">project page!</a>',
-        date: new Date() });
-    list.add({ title: 'Make things',
-        desc: 'Make this look like that',
-        date: new Date(12, 9, 5) });
-    for (var i = 0; i < 8; i++) {
-        list.add({ title: 'Move stuff',
-            desc: 'Move this over there',
-            date: new Date(12, 10, 1) });
-    }*/
+     desc: 'This is a list-detail template. Learn more ' +
+     'about it at its ' +
+     '<a href="https://github.com/mozilla/mortar-list-detail">project page!</a>',
+     date: new Date() });
+     list.add({ title: 'Make things',
+     desc: 'Make this look like that',
+     date: new Date(12, 9, 5) });
+     for (var i = 0; i < 8; i++) {
+     list.add({ title: 'Move stuff',
+     desc: 'Move this over there',
+     date: new Date(12, 10, 1) });
+     }*/
 
     /*// Detail view
 
