@@ -33,7 +33,7 @@ x-view.edit .field {
     margin-top: 1em;
 }
 
-x-listview.list li:before {
+x-listview.stationlist li:before {
     content: ' ';
     display: inline-block;
     width: 15px;
@@ -41,6 +41,31 @@ x-listview.list li:before {
     background: url(../img/glyphicons-halflings.png) no-repeat 0px -24px;
     margin-right: 5px;
     vertical-align: middle;
+}
+
+x-listview.stationlist .rightinfo {
+    float: right;
+}
+
+x-listview.departurelist li:before {
+    content: ' ';
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background: url(../img/glyphicons-halflings.png) no-repeat -46px -24px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+
+x-listview.departurelist .tostation {
+    display: inline-block;
+}
+
+x-listview.departurelist .rightinfo {
+    float: right;
+    text-align: right;
+    margin-top: -10px;
 }
 
 ul li {

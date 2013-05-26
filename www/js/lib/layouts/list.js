@@ -23,7 +23,7 @@ define(function(require) {
             // when the view is going away
             var el = this.el;
             anims.onAnimationEnd(el, function() {
-                console.log('unhighlighting');
+                //console.log('unhighlighting');
                 $('ul._list > li', el).removeClass('highlighted');
             });
 

@@ -1,23 +1,33 @@
 {
-  "version": "0.1",
-  "name": "DelayFox",
-  "description": "Check ob dein Zug zu spät ist",
-  "launch_path": "/index.html",
-  "icons": {
-    "16": "/img/icons/mortar-16.png",
-    "48": "/img/icons/mortar-48.png",
-    "128": "/img/icons/mortar-128.png"
-  },
-  "developer": {
-    "name": "Patrick Meinusch",
-    "url": "http://skix.net"
-  },
-  "installs_allowed_from": ["*"],
-  "appcache_path": "/cache.manifest",
-  "locales": {
-    "en": {
-      "description": "Check if your train is too late"
-    }
-  },
-  "default_locale": "de"
+    "version": "0.1",
+    "name": "DelayFox",
+    "description": "Check ob dein Zug zu spät ist",
+    "launch_path": "/index.html",
+    "icons": {
+        "16": "/img/icons/mortar-16.png",
+        "48": "/img/icons/mortar-48.png",
+        "128": "/img/icons/mortar-128.png"
+    },
+    "developer": {
+        "name": "Patrick Meinusch",
+        "url": "http://skix.net"
+    },
+    "installs_allowed_from": ["*"],
+    "appcache_path": "/cache.manifest",
+    "locales": {
+        "en": {
+            "description": "Check if your train is too late"
+        }
+    },
+    "default_locale": "de",
+    "permissions": {
+        "geolocation": {
+            "description": "Benötigt für die suche nach Bahnhöfen in der Nähe"
+        },
+        "systemXHR": {
+            "description": "Wird für die Abfragen der Bahnhöfe & Züge verwendet"
+        }
+    },
+    "type": "privileged",
+    "fullscreen": "false"
 }

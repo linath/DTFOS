@@ -102,6 +102,9 @@ define(function(require) {
             },
             close: function(anim) {
                 this.view.close(anim);
+            },
+            clear: function() {
+                $('._list', this).html('');
             }
         }
     });

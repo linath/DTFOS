@@ -33,44 +33,78 @@ define(function (require) {
 
     list.renderRow = function (item) {
 
-        $(this).html(item.get('stationname') + ' '+ item.get('distance') + 'm');
+        $(this).html(item.get('stationname') + ' <span class="rightinfo">'+ item.get('distance') + 'm</span>');
 
-
-    }
+    };
 
     // Daten abfragen
     navigator.geolocation.getCurrentPosition(function (position) {
+
+        console.log('got position', position);
 
         var p = new Proj4js.Point(position.coords.longitude, position.coords.latitude);
         Proj4js.transform(source, dest, p);
         p.x = p.x.toFixed();
         p.y = p.y.toFixed();
 
-        $.getJSON('http://terachat.de:8080/efa/coordinate?' + $.param({'x': p.x, 'y': p.y, 'radius': 3000}), function (data, status) {
+        $.getJSON('http://terachat.de:8080/efa/coordinate?' + $.param({'x': p.x, 'y': p.y, 'radius': 3000}), function (data) {
+            //console.log('got data', data);
             var stations = data.response.stations;
             _.each(stations, function (station) {
-
+                //console.log(station.name,station.id);
                 list.add({
                     title: station.name,
                     stationname: station.name,
                     distance: station.distance,
-                    id: station.id
+                    stationid: station.id
                 });
 
             })
         });
     }, function (error) {
-        console.log('error on getting position', error);
-    });
+        console.log('error on getting position:', error.code, error.message);
+
+    }, { enableHighAccuracy: true});
 
     var departurelist = $('.departurelist').get(0);
 
-    departurelist.open = function (item) {
+    departurelist.renderRow = function(item) {
+        //console.log('departurelist renderRow', item);
+        $(this).html('<div class="tostation"></div>' +
+            '<div class="rightinfo"><div class="mean"></div>' +
+            '<div class="countdown"></div></div>');
+        $('.tostation', this).html(item.get('to').station.direction);
+        $('.mean', this).html(item.get('line').train.name + ' ' + item.get('line').number);
+        $('.countdown', this).text('in ' + item.get('datetime').countdown + 'min');
+    };
 
+    var currentStation;
+    var getAndDisplayDeparture = function(){
+        departurelist.clear();
 
-        console.log(item.get('stationname'), item.get('id'));
+        $.getJSON('http://terachat.de:8080/efa/departures?' + $.param({'station': currentStation.stationid, 'time': new Date().getTime()}), function (data) {
+
+            var departures = data.response.departures;
+            _.each(departures, function (departure) {
+
+                departurelist.add(departure);
+            })
+        });
+    };
+
+    departurelist.onOpen = function (item) {
+        currentStation = item.model.attributes;
+        getAndDisplayDeparture();
+
 
     };
+
+
+
+    $('button.refresh', departurelist).click(function() {
+        console.log('bla');
+        getAndDisplayDeparture();
+    });
 
     // Liste einfügen
 
